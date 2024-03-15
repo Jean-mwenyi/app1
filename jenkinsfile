@@ -1,45 +1,19 @@
-pipeline {
-    agent any
-    
+pipeline{    
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('your-docker-hub-credentials-id')
-        VMWARE_WORKSTATION_CREDENTIALS = credentials('your-vmware-workstation-credentials-id')
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        IMAGE_NAME = "app1"
+        IMAGE_TAG = 'latest' 
     }
-    
-    stage('Build Docker Image') {
-        steps {
-            sh 'docker build -t jeanmwenyi/app1:latest .'
-        }
-    }
-        
-    stage('Push Docker Image') {
-        steps {
-            script {
-                withCredentials([usernamePassword(credentialsId: docker_hub_credentials, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                        sh 'docker push jeanmwenyi/app1:latest'
+    agent none 
+    stages{
+        stage('Build Image'){
+            agent any 
+            steps{
+                script{
+                    sh 'docker build -t jeanmwenyi/$IMAGE_NAME:$IMAGE_TAG .'
                 }
             }
+            
         }
     }
-        
-        // stage('Connect to VMware Workstation') {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: VMWARE_WORKSTATION_CREDENTIALS, usernameVariable: 'VMWARE_USERNAME', passwordVariable: 'VMWARE_PASSWORD')]) {
-        //                 // Ajoutez les commandes pour vous connecter à VMware Workstation
-        //             }
-        //         }
-        //     }
-        // }
-        
-        // stage('Execute Kubernetes Commands') {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: VMWARE_WORKSTATION_CREDENTIALS, usernameVariable: 'VMWARE_USERNAME', passwordVariable: 'VMWARE_PASSWORD')]) {
-        //                 // Ajoutez les commandes pour exécuter des commandes sur votre cluster Kubernetes
-        //             }
-        //         }
-        //     }
-        // }
 }
