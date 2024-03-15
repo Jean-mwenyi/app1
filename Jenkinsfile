@@ -23,7 +23,7 @@ pipeline {
                         )
                     ]
                 ) {
-                    bat "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                    bat 'docker login -u mwenyimalijean@1999 -p poney@1999'
                     bat "docker push jeanmwenyi/${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
