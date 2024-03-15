@@ -1,6 +1,6 @@
 pipeline{    
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        DOCKER_HUB_CREDENTIALS = credentials('docker_hub_credentials')
         IMAGE_NAME = "app1"
         IMAGE_TAG = 'latest' 
     }
