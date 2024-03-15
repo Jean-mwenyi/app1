@@ -15,7 +15,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                bat 'docker login -u mwenyimalijean@1999 -p poney@1999'
+                bat 'docker login -u mwenyimalijean@gmail.com -p poney@1999'
                 bat "docker push jeanmwenyi/${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
