@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('your-docker-hub-credentials-id')
+        DOCKER_HUB_CREDENTIALS = credentials('docker_hub_credentials')
         VMWARE_WORKSTATION_CREDENTIALS = credentials('your-vmware-workstation-credentials-id')
     }
     
@@ -15,7 +15,7 @@ pipeline {
     stage('Push Docker Image') {
         steps {
             script {
-                withCredentials([usernamePassword(credentialsId: docker_hub_credentials, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId:DOCKER_HUB_CREDENTIALS , usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                         sh 'docker push jeanmwenyi/app1:latest'
                 }
